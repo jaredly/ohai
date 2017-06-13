@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(executable (
+  (name ohai)
+  (public_name ohai)
+  (libraries (lib))))

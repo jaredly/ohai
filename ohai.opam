@@ -1,0 +1,12 @@
+opam-version: "2.0"
+name: "ohai"
+maintainer: "Jared Forsyth"
+build: [
+  ["jbuilder" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "jbuilder" {build}
+  "comtainers"
+  "reason" {>= "2.0.0"}
+]
+available: [ ocaml-version >= "4.02" & ocaml-version < "4.05" ]
