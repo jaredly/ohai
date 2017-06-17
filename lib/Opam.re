@@ -34,6 +34,6 @@ depends: [
   | None => ""
   })
   (info.reason ? {|
-  "reason" {>= "2.0.0"}|} : "");
+  "reason" {>= "2.0.0"} {build}|} : "");
   start
 };
