@@ -69,7 +69,7 @@ let find_git_repo () => {
 };
 
 let default args => {
-  open Args.T;
+  open Args.Init;
   let git_repo = find_git_repo();
   let name = switch args.name {
   | Some name => name

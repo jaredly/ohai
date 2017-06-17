@@ -23,6 +23,7 @@ let bin_files info => {
 let lib_files info => {
   open Info.T;
   let ext = info.reason ? ".re" : ".ml";
+  let capName = CCString.capitalize_ascii info.name;
 
   [
     ("Makefile", Templates.Lib.make info.name),
@@ -33,7 +34,7 @@ let lib_files info => {
     ("test/jbuild", Templates.Lib.Test.jbuild info.name),
     ("test/test" ^ ext,
       (info.reason ? Templates.Lib.Test.re : Templates.Lib.Test.ml)
-      info.name),
+      capName),
   ]
 };
 

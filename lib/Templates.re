@@ -15,9 +15,10 @@ module Lib = {
   let make name => "build:\n\tjbuilder build @install\n\n" ^
   "test:\n\tjbuilder runtest\n\n" ^
   "pin:\n\topam pin add .\n\n" ^
-  "repin:\n\topam upgrade " ^ name ^ "\n\n" ^
+  "repin: build\n\topam upgrade " ^ name ^ "\n\n" ^
   "build-all:\n\tjbuilder build --workspace jbuild-workspace.dev @install\n\n" ^
-  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest";
+  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest\n\n" ^
+  ".PHONY: build test pin repin build-all test-all";
 
   let jbuild name => Printf.sprintf {|
 (jbuild_version 1)
@@ -30,12 +31,21 @@ module Lib = {
 
   let re = {|
 let rec fib n => {
-  (fib (n - 1)) + (fib (n - 2))
+  switch n {
+  | 0 => 0
+  | 1 => 1
+  | _ when n < 0 => 0
+  | _ => (fib (n - 1)) + (fib (n - 2))
+  }
 };
 |};
 
   let ml = {|
-let rec fib n = (fib (n - 1)) + (fib (n - 2))
+let rec fib n = match n with
+  | 0 => 0
+  | 1 => 1
+  | _ when n < 0 => 0
+  | _ => (fib (n - 1)) + (fib (n - 2))
 |};
 
   module Test = {
@@ -56,7 +66,7 @@ let rec fib n = (fib (n - 1)) + (fib (n - 2))
 
     let re capName => Printf.sprintf {|
 let test () => {
-  assert (%s.fib 5 == 13);
+  assert (%s.fib 6 == 8);
 };
 
 test();
@@ -64,7 +74,7 @@ test();
 
     let ml capName => Printf.sprintf {|
 let test () =
-  assert (%s.fib 5 == 13)
+  assert (%s.fib 6 == 8)
 
 let _ = test()
 |} capName;
@@ -78,9 +88,10 @@ module Bin = {
   "run: build\n\tjbuilder exec " ^ name ^ "\n\n" ^
   "test:\n\tjbuilder runtest\n\n" ^
   "pin:\n\topam pin add .\n\n" ^
-  "repin:\n\topam upgrade " ^ name ^ "\n\n" ^
+  "repin: build\n\topam upgrade " ^ name ^ "\n\n" ^
   "build-all:\n\tjbuilder build --workspace jbuild-workspace.dev @install\n\n" ^
-  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest";
+  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest\n\n" ^
+  ".PHONY: build test pin repin build-all test-all";
 
   let jbuild name => Printf.sprintf {|
 (jbuild_version 1)

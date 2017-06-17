@@ -5,6 +5,9 @@ build:
 pin:
 	opam pin add .
 
+repin: build
+	opam upgrade ohai
+
 run: build
 	jbuilder exec ohai
 

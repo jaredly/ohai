@@ -1,8 +1,8 @@
 
 let info_for args => {
-  open Args.T;
+  open Args.Init;
   let default = Info.default args;
-  if (args.yes) {
+  if (args.interactive) {
     default
   } else {
     default /* TODO interactive */
@@ -19,12 +19,13 @@ let will_overwrite info => {
   if (info.new_directory) {
     Sys.file_exists info.name
   } else {
-    Sys.readdir "." != [||]
+    let contents = Sys.readdir ".";
+    contents != [||] && contents != [|".git"|]
   }
 };
 
 let validate_info args info => {
-  open Args.T;
+  open Args.Init;
   open Info.T;
   if (will_overwrite info) {
     if (args.overwrite) {
@@ -59,10 +60,23 @@ let write_file (name, contents) => {
 };
 
 let run () => {
-  let args = Args.parse (Sys.argv);
-  let info = info_for args;
-  validate_info args info;
-  let files = Files.generate info;
-  List.iter write_file files;
+  let cmd = Args.parse (Sys.argv);
+  switch cmd {
+  | NoCmd
+  | Help => {
+    print_endline Args.help;
+    exit 1
+  }
+  | Init args => {
+    let info = info_for args;
+    validate_info args info;
+    Printf.printf "Creating new %s project %S in %s/\n"
+      (info.executable ? "executable" : "library")
+      info.name
+      (info.new_directory ? info.name : ".");
+    let files = Files.generate info;
+    List.iter write_file files;
+  }
+  }
   /*print_endline (Opam.build info)*/
 };
