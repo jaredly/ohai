@@ -1,5 +1,9 @@
-
 # Ohai - easy setup for ocaml/reason native projects
+
+Think of it as the `npm init` or the `cargo new` for jbuilder + opam.
+
+- [jbuilder docs](jbuilder.readthedocs.io/en/latest/)
+- [opam docs](https://opam.ocaml.org/doc/Usage.html)
 
 ```bash
 ~$ ohai --bin testing
@@ -39,9 +43,14 @@ jbuilder exec testing
 Hello world
 ```
 
+Then take a look at the generated `Makefile` and source files for more info on
+how to get started!
+
 ## Installation
 
-Here's how to install from `master`
+Make sure you have [ocaml installed](https://opam.ocaml.org/doc/Install.html) (`brew install opam` on osx).
+
+Then go ahead and pin to this repository.
 ```
 opam pin ohai git+https://github.com/jaredly/ohai
 ```
