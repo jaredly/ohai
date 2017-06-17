@@ -65,6 +65,7 @@ let cmd_init opts arg => {
     print_endline help;
     exit 1;
   }
+  | "." => {...opts, name: None}
   | name when (is_valid_name name) => {...opts, name: Some name}
   | _ => {
     Printf.printf "!! Unexpected parameter %s\n\n" arg;
