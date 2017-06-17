@@ -1,5 +1,6 @@
 opam-version: "2.0"
 name: "ohai"
+version: "1.0.0"
 maintainer: "Jared Forsyth"
 build: [
   ["jbuilder" "build" "-p" name "-j" jobs]

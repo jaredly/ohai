@@ -5,10 +5,19 @@ _build
 *.install
 |};
 
+let workspace = {|
+(context ((switch 4.02.3)))
+(context ((switch 4.03.0)))
+(context ((switch 4.04.0)))
+|};
+
 module Lib = {
-  /* TODO add hooks for testing */
   let make name => "build:\n\tjbuilder build @install\n\n" ^
-  "test:\n\tjbuilder runtest";
+  "test:\n\tjbuilder runtest\n\n" ^
+  "pin:\n\topam pin add .\n\n" ^
+  "repin:\n\topam upgrade " ^ name ^ "\n\n" ^
+  "build-all:\n\tjbuilder build --workspace jbuild-workspace.dev @install\n\n" ^
+  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest";
 
   let jbuild name => Printf.sprintf {|
 (jbuild_version 1)
@@ -66,8 +75,12 @@ let _ = test()
 module Bin = {
 
   let make name => "build:\n\tjbuilder build @install\n\n" ^
-  "run:build\n\tjbuilder exec " ^ name ^ "\n\n" ^
-  "test:\n\tjbuilder runtest";
+  "run: build\n\tjbuilder exec " ^ name ^ "\n\n" ^
+  "test:\n\tjbuilder runtest\n\n" ^
+  "pin:\n\topam pin add .\n\n" ^
+  "repin:\n\topam upgrade " ^ name ^ "\n\n" ^
+  "build-all:\n\tjbuilder build --workspace jbuild-workspace.dev @install\n\n" ^
+  "test-all:\n\tjbuilder build --workspace jbuild-workspace.dev @runtest";
 
   let jbuild name => Printf.sprintf {|
 (jbuild_version 1)
@@ -125,7 +138,7 @@ let add2 x = x + 2
 
     let re = {|
 let test () => {
-  assert (Lib.add2 5 == 7);
+  assert (Lib.Main.add2 5 == 7);
 };
 
 test();
@@ -133,7 +146,7 @@ test();
 
     let ml = {|
 let test () =
-  assert (Lib.add2 5 == 7)
+  assert (Lib.Main.add2 5 == 7)
 
 let _ = test()
 |};

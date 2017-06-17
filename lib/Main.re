@@ -37,16 +37,11 @@ let validate_info args info => {
 };
 
 let mkdirs name => {
-  print_endline ("mkdirs" ^ name);
   let parts = CCString.split_on_char '/' name;
   let rec loop parts parent => switch parts {
-  | [] | [_] => {
-    print_endline "dome";
-    ()
-  }
+  | [] | [_] => ()
   | [part, ...rest] => {
     let full = (parent ^ "/" ^ part);
-    print_endline ("things " ^ full);
     if (not (CCIO.File.exists full)) {
       Unix.mkdir full 0o755;
     };

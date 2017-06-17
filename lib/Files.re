@@ -41,6 +41,7 @@ let generate info => {
   open Info.T;
   let files = [
     (info.name ^ ".opam", Opam.build info),
+    ("jbuild-workspace.dev", Templates.workspace),
     (".gitignore", Templates.gitignore),
     ...((info.executable ? bin_files : lib_files) info)
   ];
