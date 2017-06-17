@@ -67,10 +67,14 @@ let find_git_repo () => {
   }
 };
 
-let default is_exec => {
+let default is_exec name => {
   let git_repo = find_git_repo();
+  let name = switch name {
+  | Some name => name
+  | None => get_name() |> CCOpt.get_or default::(is_exec ? "my_cli" : "my_lib")
+  };
   T.{
-    name: get_name() |> CCOpt.get_or default::(is_exec ? "my_cli" : "my_lib"),
+    name,
     version: "1.0.0",
     maintainer: git_user() |> CCOpt.get_or default::"Unknown",
     reason: true,

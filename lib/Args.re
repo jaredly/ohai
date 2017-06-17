@@ -2,6 +2,8 @@
 module T = {
   type t = {
     yes: bool,
+    name: option string,
+    bin: bool,
   };
 };
 
@@ -11,7 +13,7 @@ module T = {
 // put with a ppx to make everything magic
  */
 let parse args => switch args {
-  | [|_, "-y"|] => T.{yes: true}
-  | _ => T.{yes: false}
+  | [|_, "-y"|] => T.{yes: true, name: None, bin: true}
+  | _ => T.{yes: false, name: None, bin: true}
 };
 

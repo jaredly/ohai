@@ -16,9 +16,8 @@ bug-reports: %S
 dev-repo: %S
 license: [%s]
 tags: []
-build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
-]
+build: [["jbuilder" "build" "-p" name "-j" jobs]]
+build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 depends: [
   "jbuilder" {build}%s
 ]
