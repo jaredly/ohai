@@ -6,8 +6,8 @@ build: [
   ["jbuilder" "build" "-p" name "-j" jobs]
 ]
 depends: [
-  "jbuilder" {build}
-  "reason" {>= "2.0.0"} {build}
+  "jbuilder"
+  "reason" {>= "2.0.0"}
   "containers"
 ]
 available: [ ocaml-version >= "4.02" & ocaml-version < "4.05" ]
