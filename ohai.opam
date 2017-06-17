@@ -6,7 +6,7 @@ build: [
 ]
 depends: [
   "jbuilder" {build}
-  "comtainers"
+  "containers"
   "reason" {>= "2.0.0"}
 ]
 available: [ ocaml-version >= "4.02" & ocaml-version < "4.05" ]

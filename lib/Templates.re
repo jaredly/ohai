@@ -66,7 +66,7 @@ let _ = test()
 module Bin = {
 
   let make name => "build:\n\tjbuilder build @install\n\n" ^
-  "run:build\n\tjbuilder exec" ^ name ^ "\n\n" ^
+  "run:build\n\tjbuilder exec " ^ name ^ "\n\n" ^
   "test:\n\tjbuilder runtest";
 
   let jbuild name => Printf.sprintf {|
@@ -92,7 +92,7 @@ module Bin = {
 |};
 
     let re = {|
-let main () => {
+let run () => {
   print_endline "Hello world";
 };
 
@@ -100,7 +100,7 @@ let add2 x => x + 2;
 |};
 
     let ml = {|
-let main () = print_endline "Hello world"
+let run () = print_endline "Hello world"
 
 let add2 x = x + 2
 |};
