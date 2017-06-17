@@ -1,2 +1,2 @@
 
-print_endline "hello";
+Lib.Main.run();

@@ -2,4 +2,4 @@
 
 (library (
   (name lib)
-  (libraries ())))
+  (libraries (containers containers.unix))))
