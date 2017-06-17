@@ -2,6 +2,7 @@
 module T = {
   type t = {
     name: string,
+    new_directory: bool,
     version: string,
     maintainer: string,
     reason: bool,
@@ -67,22 +68,24 @@ let find_git_repo () => {
   }
 };
 
-let default is_exec name => {
+let default args => {
+  open Args.T;
   let git_repo = find_git_repo();
-  let name = switch name {
+  let name = switch args.name {
   | Some name => name
-  | None => get_name() |> CCOpt.get_or default::(is_exec ? "my_cli" : "my_lib")
+  | None => get_name() |> CCOpt.get_or default::(args.bin ? "my_cli" : "my_lib")
   };
   T.{
     name,
+    new_directory: args.name != None,
     version: "1.0.0",
     maintainer: git_user() |> CCOpt.get_or default::"Unknown",
-    reason: true,
+    reason: args.reason,
     license: Some "ISC",
     homepage: git_repo >>= git_homepage,
     bug_reports: git_repo >>= git_bug_reports,
     dev_repo: git_repo,
-    executable: is_exec,
+    executable: args.bin,
     tags: [],
     synopsis: None,
   };
