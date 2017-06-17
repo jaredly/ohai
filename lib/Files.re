@@ -1,4 +1,9 @@
 
+/**
+ * Here we just construct the list of files needed, based on the info
+ * we've assembled.
+ */
+
 let bin_files info => {
   open Info.T;
   let ext = info.reason ? ".re" : ".ml";

@@ -90,3 +90,8 @@ the current directory (if empty) will be used.
   --lib             use template for a library [default]
   --ml              don't use reason syntax
 ```
+
+## Roadmap
+
+- make a ppx for inlining static files (see `Templates.re`)
+- have a template for ppxs

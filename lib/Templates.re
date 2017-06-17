@@ -1,4 +1,15 @@
 
+/**
+ * Here are all the files we might create.
+ * 
+ * I probably want to make a ppx similar to
+ * [babel-plugin-static-fs](https://www.npmjs.com/package/babel-plugin-static-fs)
+ * or [babel-plugin-include](https://www.npmjs.com/package/babel-plugin-include)
+ * or [babel-plugin-inline-import](https://www.npmjs.com/package/babel-plugin-inline-import)
+ * so that I can put these contents in actual files but then have them inlined
+ * at compile time. Something like `[%inline "./lib/jbuild"].
+ */
+
 let gitignore = {|
 .merlin
 _build
@@ -164,5 +175,3 @@ let _ = test()
 
   };
 };
-
-

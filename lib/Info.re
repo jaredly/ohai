@@ -1,4 +1,15 @@
 
+/**
+ * This models all of the information needed to make the jbuild & opam files.
+ * 
+ * I've put it in a module `T` to get around ocaml's weird scoping rules for
+ * record labels. Basically, in order to use a record, you have to `import *`
+ * from the module where it's defined. Now, `import *` is pretty bad for
+ * being able to reason about where a given variable etc. was defined, and so 
+ * I make these very small modules that only contain the type definition.
+ * Then, I can do `open Info.T` and I know that I'm only getting what I want
+ * -- the record labels.
+ */
 module T = {
   type t = {
     name: string,
@@ -15,8 +26,6 @@ module T = {
     executable: bool,
   };
 };
-
-let (>>=) = CCOpt.(>>=);
 
 let strip_dot_git name => {
   if (String.sub name (String.length name - 4) 4 == ".git") {
@@ -59,6 +68,10 @@ let git_user () => {
   }
 };
 
+/**
+ * If we're in a git repo w/ a remote origin, we can use that
+ * in the opam file.
+ */
 let find_git_repo () => {
   let (out, err, status) = CCUnix.call "git remote get-url origin";
   if (status == 0) {
@@ -75,6 +88,7 @@ let default args => {
   | Some name => name
   | None => get_name() |> CCOpt.get_or default::(args.bin ? "my_cli" : "my_lib")
   };
+  let (>>=) = CCOpt.(>>=);
   T.{
     name,
     new_directory: args.name != None,

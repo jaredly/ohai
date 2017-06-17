@@ -1,4 +1,8 @@
 
+/**
+ * CLI argument parsing!
+ */
+
 module Init = {
   type t = {
     interactive: bool,
@@ -81,6 +85,8 @@ let pick_cmd arg => {
     Cmds.Help
   }
   | "init" => Cmds.Init Init.default
+  /* If the first argument isn't a command, we default
+   * to the "init" command. */
   | _ => Cmds.Init (cmd_init Init.default arg)
   }
 };

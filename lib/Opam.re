@@ -1,8 +1,6 @@
 
 /* Build an Opam file */
 
-let simple name value => name ^ ": \"" ^ value ^ "\"";
-
 let build info => {
   open Info.T;
   let start = Printf.sprintf

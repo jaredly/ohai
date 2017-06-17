@@ -2,5 +2,7 @@
 
 (executable (
   (name ohai)
+  ; This means that when you `opam install ohai`, this executable will be available globally.
   (public_name ohai)
+  ; We're putting all of the logic in the `lib` internal library
   (libraries (lib))))

@@ -14,6 +14,9 @@ let fail message => {
   exit 1;
 };
 
+/**
+ * Check to see if the place we're going to write to is already populated.
+ */
 let will_overwrite info => {
   open Info.T;
   if (info.new_directory) {
@@ -37,6 +40,9 @@ let validate_info args info => {
   /* TODO more validation? */
 };
 
+/**
+ * A helper fn for making sure all of the parent directories of a filename are present.
+ */
 let mkdirs name => {
   let parts = CCString.split_on_char '/' name;
   let rec loop parts parent => switch parts {
@@ -55,8 +61,7 @@ let mkdirs name => {
 
 let write_file (name, contents) => {
   mkdirs name;
-  let file = CCIO.File.make name;
-  CCIO.File.write_exn file contents;
+  CCIO.File.write_exn (CCIO.File.make name) contents;
 };
 
 let run () => {
@@ -78,5 +83,4 @@ let run () => {
     List.iter write_file files;
   }
   }
-  /*print_endline (Opam.build info)*/
 };
