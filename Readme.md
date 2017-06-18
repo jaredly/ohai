@@ -60,7 +60,7 @@ Make sure you have [ocaml installed](https://opam.ocaml.org/doc/Install.html) (`
 
 Then go ahead and pin to this repository.
 ```
-opam pin ohai git+https://github.com/jaredly/ohai
+opam pin add ohai git+https://github.com/jaredly/ohai
 ```
 
 ## Usage
