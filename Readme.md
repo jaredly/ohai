@@ -2,7 +2,7 @@
 
 Think of it as the `npm init` or the `cargo new` for jbuilder + opam.
 
-- [jbuilder docs](jbuilder.readthedocs.io/en/latest/)
+- [jbuilder docs](https://jbuilder.readthedocs.io/en/latest/)
 - [opam docs](https://opam.ocaml.org/doc/Usage.html)
 
 ```bash
