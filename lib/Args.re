@@ -69,8 +69,16 @@ let cmd_init opts arg => {
     print_endline help;
     exit 1;
   }
+  | arg when (CCString.prefix pre::"-" arg) => {
+    Printf.printf "!! Invalid argument %s\n\n" arg;
+    exit 1
+  }
   | "." => {...opts, name: None}
   | name when (is_valid_name name) => {...opts, name: Some name}
+  | name when not (is_valid_name name) => {
+    Printf.printf "!! Invalid name %s\n\n" name;
+    exit 1;
+  }
   | _ => {
     Printf.printf "!! Unexpected parameter %s\n\n" arg;
     print_endline help;
