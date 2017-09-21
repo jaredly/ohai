@@ -1,0 +1,80 @@
+{
+  "name": "jaredly/ohai",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "Ohai",
+  "branch": "",
+  "style": {
+    "name": "Williamsburg",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/LightBannerHeader",
+      "article": "article/ReaderArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "Montserrat, sans-serif",
+    "heading": {
+      "fontWeight": 600,
+      "letterSpacing": "0.1em"
+    },
+    "colors": {
+      "text": "#346",
+      "background": "#fff",
+      "primary": "#0099e0",
+      "secondary": "#ab61ff",
+      "highlight": "#f7b",
+      "muted": "#fffab3",
+      "border": "#ccd"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/jaredly/ohai",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "ohai",
+      "subhead": "easy setup from ocaml/reason native projects",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "ohai: easy setup from ocaml/reason native projects",
+          "url": ""
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "jaredly",
+          "repo": "ohai"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "<h1>Ohai - easy setup for ocaml/reason native projects</h1>\n<p>Think of it as the <code>npm init</code> or the <code>cargo new</code> for jbuilder + opam.</p>\n<ul>\n<li><a href=\"https://jbuilder.readthedocs.io/en/latest/\">jbuilder docs</a></li>\n<li><a href=\"https://opam.ocaml.org/doc/Usage.html\">opam docs</a></li>\n</ul>\n<pre>~$ ohai --bin example\nCreating new executable project <span class=\"hljs-string\">&quot;example&quot;</span> <span class=\"hljs-keyword\">in</span> example/\n~$ <span class=\"hljs-built_in\">cd</span> example\n~$ tree\n.\n&#x251C;&#x2500;&#x2500; Makefile\n&#x251C;&#x2500;&#x2500; bin\n&#x2502;   &#x251C;&#x2500;&#x2500; jbuild\n&#x2502;   &#x2514;&#x2500;&#x2500; example.re\n&#x251C;&#x2500;&#x2500; jbuild-workspace.dev\n&#x251C;&#x2500;&#x2500; lib\n&#x2502;   &#x251C;&#x2500;&#x2500; Main.re\n&#x2502;   &#x2514;&#x2500;&#x2500; jbuild\n&#x251C;&#x2500;&#x2500; <span class=\"hljs-built_in\">test</span>\n&#x2502;   &#x251C;&#x2500;&#x2500; jbuild\n&#x2502;   &#x2514;&#x2500;&#x2500; test.re\n&#x2514;&#x2500;&#x2500; example.opam\n\n3 directories, 9 files\n~$ make run\njbuilder build @install\n       refmt bin/example.re.ml\n    ocamldep bin/example.depends.ocamldep-output\n      ocamlc lib/lib.{cmi,cmo,cmt}\n       refmt lib/Main.re.ml\n    ocamldep lib/lib.depends.ocamldep-output\n      ocamlc lib/lib__Main.{cmi,cmo,cmt}\n      ocamlc bin/example.{cmi,cmo,cmt}\n    ocamlopt lib/lib.{cmx,o}\n    ocamlopt lib/lib__Main.{cmx,o}\n    ocamlopt lib/lib.{a,cmxa}\n    ocamlopt bin/example.{cmx,o}\n    ocamlopt bin/example.exe\njbuilder <span class=\"hljs-built_in\">exec</span> example\nHello world</pre><p>Then take a look at the generated <code>Makefile</code> and source files for more info on\nhow to get started!</p>\n<h2>Why do we need this?</h2>\n<p>If you haven&apos;t done it before, setting up all the <code>jbuild</code> and <code>opam</code> files\ncan be a bit confusing. If you have done it before, it can be tedious!</p>\n<p><code>ohai</code> gets the boilerplate out of the way so you can start building your\nthing.</p>\n<h2>Installation</h2>\n<p>Make sure you have <a href=\"https://opam.ocaml.org/doc/Install.html\">ocaml installed</a> (<code>brew install opam</code> on osx).</p>\n<p>Then go ahead and pin to this repository.</p>\n<pre>opam pin <span class=\"hljs-built_in\">add</span> ohai git+http<span class=\"hljs-variable\">s:</span>//github.<span class=\"hljs-keyword\">com</span>/jaredly/ohai</pre><h2>Usage</h2>\n<pre>~$ ohai\nUsage: ohai [cmd] [opts]\n\nOptions:\n  -h <span class=\"hljs-comment\">--help         show this info</span>\n\nCommands:\n\n&gt; help\n\nshow this help\n\n&gt; init [?name] [opts]\n\nIf you provide <span class=\"hljs-keyword\">a</span> package name, <span class=\"hljs-keyword\">a</span> <span class=\"hljs-built_in\">directory</span> <span class=\"hljs-keyword\">of</span> that name\nwill be created <span class=\"hljs-keyword\">with</span> <span class=\"hljs-keyword\">the</span> generated <span class=\"hljs-built_in\">files</span>. If you <span class=\"hljs-built_in\">do</span> <span class=\"hljs-keyword\">not</span>,\n<span class=\"hljs-keyword\">the</span> current <span class=\"hljs-built_in\">directory</span> (<span class=\"hljs-keyword\">if</span> <span class=\"hljs-literal\">empty</span>) will be used.\n\n  -i <span class=\"hljs-comment\">--interactive  ask for information interactively (coming soon)</span>\n  <span class=\"hljs-comment\">--overwrite       write files even if directory is not empty</span>\n  <span class=\"hljs-comment\">--bin             use template for an executable</span>\n  <span class=\"hljs-comment\">--lib             use template for a library [default]</span>\n  <span class=\"hljs-comment\">--ml              don&apos;t use reason syntax</span></pre><h2>Roadmap</h2>\n<ul>\n<li>make a ppx for inlining static files (see <code>Templates.re</code>)</li>\n<li>have a template for ppxs</li>\n</ul>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/jaredly/ohai",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/jaredly",
+          "text": "jaredly"
+        }
+      ]
+    }
+  ]
+}
