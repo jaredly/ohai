@@ -63,6 +63,10 @@ Then go ahead and pin to this repository.
 opam pin add ohai git+https://github.com/jaredly/ohai
 ```
 
+_The current version of ocaml installed by homebrew is `4.05.0`, but ohai expects ocaml verion `4.02.3`, `4.03.0`, or `4.04.0`.
+Run `opam switch 4.04.0` if the opam pin command fails._ 
+
+
 ## Usage
 
 ```
