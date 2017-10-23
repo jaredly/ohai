@@ -29,7 +29,7 @@ module Cmds = {
     /* TODO more commands? */
 };
 
-let valid_name_rx = Str.regexp "^[a-z0-9_]+$";
+let valid_name_rx = Str.regexp "^[a-z0-9_-]+$";
 let is_valid_name name => Str.string_match valid_name_rx name 0;
 
 let help = {|Usage: ohai [cmd] [opts]
