@@ -10,4 +10,4 @@ depends: [
   "reason" {>= "1.13.0"}
   "containers"
 ]
-available: [ ocaml-version >= "4.02" & ocaml-version < "4.05" ]
+available: [ ocaml-version >= "4.02" & ocaml-version <= "4.05" ]
