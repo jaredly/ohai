@@ -1,6 +1,7 @@
-NOTE: This project uses jbuilder, but now there's a version of bucklescript that can compile to native! I'd recommend just using that instead (`bsb -init` essentially does what ohai does for jbuilder) https://github.com/bsansouci/bsb-native/
+# Deprecation notice
+This project is based on jbuilder, but now there's a version of bucklescript that can compile to native! I'd recommend just using that instead (`bsb -init` essentially does what ohai does for jbuilder) https://github.com/bsansouci/bsb-native/
 
-# Ohai - easy setup for ocaml/reason native projects
+# Ohai - easy setup for jbuilder projects
 
 Think of it as the `npm init` or the `cargo new` for jbuilder + opam.
 
