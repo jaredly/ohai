@@ -31,7 +31,7 @@ depends: [
       | None => ""
       },
       info.reason ? {|
-  "reason" {>= "2.0.0"} {build}|} : ""
+  "reason" {>= "3.0.0"} {build}|} : ""
     );
   start
 };

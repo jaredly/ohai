@@ -59,14 +59,13 @@ module Lib = {
       name
     );
   let re = {|
-let rec fib n => {
+let rec fib = (n) =>
   switch n {
   | 0 => 0
   | 1 => 1
   | _ when n < 0 => 0
-  | _ => (fib (n - 1)) + (fib (n - 2))
-  }
-};
+  | _ => fib(n - 1) + fib(n - 2)
+  };
 |};
   let ml = {|
 let rec fib n = match n with
@@ -96,9 +95,7 @@ let rec fib n = match n with
       );
     let re = (capName) =>
       Printf.sprintf({|
-let test () => {
-  assert (%s.fib 6 == 8);
-};
+let test = () => assert (%s.fib(6) == 8);
 
 test();
 |}, capName);
@@ -170,14 +167,12 @@ module Bin = {
   (libraries ())))
 |};
     let re = {|
-let run () => {
-  print_endline "Hello world";
-};
+let run = () => print_endline("Hello world");
 
-let add2 x => x + 2;
+let add2 = (x) => x + 2;
 |};
     let ml = {|
-let run () = print_endline "Hello world"
+let run () = print_endline("Hello world")
 
 let add2 x = x + 2
 |};
@@ -198,9 +193,7 @@ let add2 x = x + 2
 ))
 |};
     let re = {|
-let test () => {
-  assert (Lib.Main.add2 5 == 7);
-};
+let test = () => assert (Lib.Main.add2(5) == 7);
 
 test();
 |};
