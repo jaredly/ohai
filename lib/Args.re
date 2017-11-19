@@ -1,36 +1,28 @@
-
-/**
+/***
  * CLI argument parsing!
  */
-
 module Init = {
   type t = {
     interactive: bool,
-    name: option string,
+    name: option(string),
     reason: bool,
     overwrite: bool,
-    bin: bool,
+    bin: bool
   };
-
-  let default = {
-    interactive: false,
-    name: None,
-    overwrite: false,
-    bin: false,
-    reason: true,
-  };
+  let default = {interactive: false, name: None, overwrite: false, bin: false, reason: true};
 };
 
 module Cmds = {
   type t =
-    | Init Init.t
+    | Init(Init.t)
     | NoCmd
     | Help;
-    /* TODO more commands? */
+  /* TODO more commands? */
 };
 
-let valid_name_rx = Str.regexp "^[a-z0-9_]+$";
-let is_valid_name name => Str.string_match valid_name_rx name 0;
+let valid_name_rx = Str.regexp("^[a-z0-9_]+$");
+
+let is_valid_name = (name) => Str.string_match(valid_name_rx, name, 0);
 
 let help = {|Usage: ohai [cmd] [opts]
 
@@ -56,61 +48,58 @@ the current directory (if empty) will be used.
   --ml              don't use reason syntax
 |};
 
-let cmd_init opts arg => {
-  open Init;
-  switch arg {
-  | "-i"
-  | "--interactive" => {...opts, interactive: true}
-  | "--overwrite" => {...opts, overwrite: true}
-  | "--bin" => {...opts, bin: true}
-  | "--lib" => {...opts, bin: false}
-  | "--ml" => {...opts, reason: false}
-  | "-h" | "--help" => {
-    print_endline help;
-    exit 1;
-  }
-  | arg when (CCString.prefix pre::"-" arg) => {
-    Printf.printf "!! Invalid argument %s\n\n" arg;
-    exit 1
-  }
-  | "." => {...opts, name: None}
-  | name when (is_valid_name name) => {...opts, name: Some name}
-  | name when not (is_valid_name name) => {
-    Printf.printf "!! Invalid name %s\n\n" name;
-    exit 1;
-  }
-  | _ => {
-    Printf.printf "!! Unexpected parameter %s\n\n" arg;
-    print_endline help;
-    exit 1;
-  }
-  };
-};
+let cmd_init = (opts, arg) =>
+  Init.(
+    switch arg {
+    | "-i"
+    | "--interactive" => {...opts, interactive: true}
+    | "--overwrite" => {...opts, overwrite: true}
+    | "--bin" => {...opts, bin: true}
+    | "--lib" => {...opts, bin: false}
+    | "--ml" => {...opts, reason: false}
+    | "-h"
+    | "--help" =>
+      print_endline(help);
+      exit(1)
+    | arg when CCString.prefix(~pre="-", arg) =>
+      Printf.printf("!! Invalid argument %s\n\n", arg);
+      exit(1)
+    | "." => {...opts, name: None}
+    | name when is_valid_name(name) => {...opts, name: Some(name)}
+    | name when ! is_valid_name(name) =>
+      Printf.printf("!! Invalid name %s\n\n", name);
+      exit(1)
+    | _ =>
+      Printf.printf("!! Unexpected parameter %s\n\n", arg);
+      print_endline(help);
+      exit(1)
+    }
+  );
 
-let pick_cmd arg => {
+let pick_cmd = (arg) =>
   switch arg {
-  | "-h" | "--help" | "help" => {
-    Cmds.Help
-  }
-  | "init" => Cmds.Init Init.default
+  | "-h"
+  | "--help"
+  | "help" => Cmds.Help
+  | "init" => Cmds.Init(Init.default)
   /* If the first argument isn't a command, we default
    * to the "init" command. */
-  | _ => Cmds.Init (cmd_init Init.default arg)
-  }
-};
+  | _ => Cmds.Init(cmd_init(Init.default, arg))
+  };
 
-let consume (first, opts) arg => {
-  open Cmds;
-  if (first) {
-    (false, opts);
-  } else {
-    let opts = switch opts {
-    | NoCmd => pick_cmd arg
-    | Init opts => Init (cmd_init opts arg)
-    | Help => Help
-    };
-    (false, opts)
-  }
-};
+let consume = ((first, opts), arg) =>
+  Cmds.(
+    if (first) {
+      (false, opts)
+    } else {
+      let opts =
+        switch opts {
+        | NoCmd => pick_cmd(arg)
+        | Init(opts) => Init(cmd_init(opts, arg))
+        | Help => Help
+        };
+      (false, opts)
+    }
+  );
 
-let parse args => snd (Array.fold_left consume (true, Cmds.NoCmd) args);
+let parse = (args) => snd(Array.fold_left(consume, (true, Cmds.NoCmd), args));
